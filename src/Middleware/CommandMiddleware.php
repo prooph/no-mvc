@@ -62,6 +62,8 @@ class CommandMiddleware
             $command = call_user_func_array($command, [$payload]);
 
             $this->commandBus->dispatch($command);
+
+            return $response->withStatus(202);
         } catch (CommandDispatchException $dispatchException) {
             $e = $dispatchException->getFailedCommandDispatch()->getException();
 
@@ -69,8 +71,6 @@ class CommandMiddleware
         } catch (\Exception $e) {
             return $this->populateError($response, $e);
         }
-
-        return $response->withStatus(202);
     }
 
     /**
