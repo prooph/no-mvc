@@ -24,3 +24,25 @@ generator on server-side. We hope that thus two tools will simplify the communic
 client-side and consistent business logic server-side.
 
 If you want to join the experiment, just drop us an email or watch the project! We appreciate any help and input.
+
+## Installation
+`git clone` the repository and run `composer install`.
+
+## Run the http example
+`cd` into the root of the cloned repository.
+Start the internal PHP web server with the command `php -S 0.0.0.0:8000 -t public` and send a `http POST request` to
+`http://localhost:8000/api/commands/RegisterUser` with following request body
+```json
+{
+  "name" : "Jane Doe",
+  "email" : "doe@acme.com"
+}
+```
+
+If everything was set up correctly you should get a `202 Accepted` response without a response body.
+You can verify that your user was registered by looking into the file `data/users.json`.
+
+## Help
+
+If you need any help or one of the examples doesn't work feel free to open an [issue](https://github.com/prooph/no-mvc/issues).
+Same if you have a suggestion or want to give feedback.
