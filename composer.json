@@ -1,0 +1,35 @@
+{
+    "name": "prooph/no-mvc",
+    "description": "NoMVC for PHP",
+    "license": "BSD-3-Clause",
+    "keywords": [
+        "prooph",
+        "no-mvc",
+        "messaging"
+    ],
+    "homepage": "https://github.com/prooph/no-mvc",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/ezimuel/zend-stratigility-dispatch"
+        }
+    ],
+    "require": {
+        "php": ">=5.5",
+        "prooph/proophessor": "~0.5",
+        "zendframework/zend-diactoros" : "~1.0",
+        "zendframework/zend-stratigility": "~1.0",
+        "zendframework/zend-stratigility-dispatch": "dev-master",
+        "zendframework/zend-servicemanager" : "~2.4"
+    },
+    "require-dev" : {
+        "phpspec/phpspec": "~2.0"
+    },
+    "bin-dir" : "./bin",
+    "autoload": {
+        "psr-4": {
+            "Prooph\\NoMvc\\": "src",
+            "ProophExample\\NoMvc\\": "example"
+        }
+    }
+}
