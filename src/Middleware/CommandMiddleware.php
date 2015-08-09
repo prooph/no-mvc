@@ -47,11 +47,7 @@ class CommandMiddleware
 
         try {
 
-            $payload = json_decode($request->getBody(), true);
-
-            if ($payload === null) {
-                $payload = [];
-            }
+            $payload = $this->getPayloadFromRequest($request);
 
             $command = $this->commands[$path];
 
@@ -71,6 +67,34 @@ class CommandMiddleware
         } catch (\Exception $e) {
             return $this->populateError($response, $e);
         }
+    }
+    
+    /**
+     * Get request payload from request object.
+     * 
+     * @todo check $request->getHeaderLine('content-type') ??
+     * 
+     * @param RequestInterface $request
+     * @return array
+     * 
+     * @throws \Exception
+     */
+    private function getPayloadFromRequest($request)
+    {
+        $payload = json_decode($request->getBody(), true);
+        
+        switch (json_last_error()) {
+            case JSON_ERROR_DEPTH:
+                throw new Exception('Invalid JSON, maximum stack depth exceeded.', 400);
+            case JSON_ERROR_UTF8:
+                throw new Exception('Malformed UTF-8 characters, possibly incorrectly encoded.', 400);
+            case JSON_ERROR_SYNTAX:
+            case JSON_ERROR_CTRL_CHAR:
+            case JSON_ERROR_STATE_MISMATCH:
+                throw new Exception('Invalid JSON.', 400);
+        }
+        
+        return is_null($payload) ? [] : $payload;
     }
 
     /**
