@@ -79,16 +79,13 @@ class CommandMiddleware
      */
     private function getStatusErrorCodeFromException(\Exception $e)
     {
-        switch ($e->getCode()) {
-            //@TODO: complete list of supported status error codes
-            case 400:
-            case 405:
-            case 404:
-            case 422:
-                return $e->getCode();
-            default:
-                return 500;
+        $code = $e->getCode();
+        
+        if ($code >= 400 or $code < 500) {
+            return $code;
         }
+        
+        return 500;
     }
 
     /**
