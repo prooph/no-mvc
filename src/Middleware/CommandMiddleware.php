@@ -55,7 +55,7 @@ class CommandMiddleware
                 throw new \RuntimeException("Command associated with the path $path is not callable");
             }
 
-            $command = call_user_func_array($command, [$payload]);
+            $command = call_user_func($command, $payload);
 
             $this->commandBus->dispatch($command);
 
